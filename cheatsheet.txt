@@ -8,6 +8,16 @@ THE BASIC LOOP
 3. Check what changed  git status   /   git diff
 4. Stage the changes   git add .
 5. Save a snapshot     git commit -m "what I changed"
+6. Publish it          git push     (updates GitHub, and the live site)
+
+
+MY LIVE SITE
+------------
+Repo:       https://github.com/samuelwarner-max/about-me
+Live page:  https://samuelwarner-max.github.io/about-me/
+
+To update the live page: edit, save, git add ., git commit -m "...", git push.
+Then wait a minute or two and refresh the live page.
 
 
 GIT: THE COMMANDS YOU'LL USE MOST
@@ -42,6 +52,23 @@ git clone <url>              Copy a GitHub repo to your computer
 One-time setup
 git config --global user.name "Your Name"
 git config --global user.email "you@example.com"
+
+Putting a NEW project on GitHub + GitHub Pages (what I did for about-me)
+1. On github.com click +, then New repository. Pick a name, set it to Public,
+   and do NOT add a README.
+2. In the terminal, in the project folder (after at least one commit):
+     git remote add origin https://github.com/USERNAME/REPO.git
+     git push -u origin main
+3. On GitHub: Settings, then Pages. Set Source to "Deploy from a branch",
+   Branch to main and / (root), then Save.
+4. Wait 1-2 minutes. The live link shows up on the Pages settings page:
+     https://USERNAME.github.io/REPO/
+   (The page's main file must be named index.html.)
+
+Notes
+- GitHub's "quick setup" box includes extra lines (echo README, git init, etc.).
+  You don't need them if you already have a repo with commits. They're harmless though.
+- Public repos are visible to everyone. Don't commit passwords or private info.
 
 
 GIT VOCABULARY
@@ -122,6 +149,12 @@ WHEN THINGS GO WRONG
 "fatal: not a git repository"     You're in the wrong folder. Run pwd, then cd to your project.
 "nothing to commit"               You haven't changed anything since the last commit.
 "Please tell me who you are"      Run the two git config --global commands above.
+Live site shows 404               Wait a couple of minutes. Also check Settings > Pages
+                                  and that the file is called index.html.
+Live site didn't update           Did you git push? Check git status, then wait a minute and
+                                  hard-refresh the page (Cmd+Shift+R).
+Push asks me to sign in           Follow the browser prompt to sign in to GitHub.
+Tried git restore and it worked   Nice. It only undoes changes you haven't committed yet.
 Stuck in a weird screen           Press q. Still stuck? Press Ctrl+C.
 Made a mess                       git status, then git restore <file>, or ask Claude.
 Not sure what to do               Run git status. It almost always tells you the next step.
