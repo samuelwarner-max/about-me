@@ -1,0 +1,127 @@
+CHEAT SHEET: VS CODE, GIT, AND CLAUDE CODE
+==========================================
+
+THE BASIC LOOP
+--------------
+1. Edit a file         (by hand, or ask Claude)
+2. Save                Cmd+S
+3. Check what changed  git status   /   git diff
+4. Stage the changes   git add .
+5. Save a snapshot     git commit -m "what I changed"
+
+
+GIT: THE COMMANDS YOU'LL USE MOST
+---------------------------------
+git init                     Turn the current folder into a git repository (once per project)
+git status                   What's changed? What's staged? Run this a lot.
+git diff                     Show exact line changes not yet staged (q to exit)
+git add .                    Stage ALL changes for the next commit
+git add <file>               Stage just one file
+git commit -m "message"      Save a snapshot with a short note
+git log                      Full history (q to exit)
+git log --oneline            Compact history, one line per commit
+
+Undoing things (look at git status first!)
+git restore <file>           Throw away unsaved-to-git edits in a file (can't be undone!)
+git restore --staged <file>  Unstage a file but keep your edits
+git revert <commit-id>       Undo an old commit by making a new one (safe)
+
+Branches (try risky ideas safely)
+git branch                   List branches
+git switch -c <name>         Create a new branch and move to it
+git switch main              Go back to the main branch
+git merge <name>             Bring a branch's changes into the one you're on
+
+GitHub (backing up and sharing online)
+git remote add origin <url>  Connect this project to a GitHub repo (once)
+git push -u origin main      Upload your commits (first time)
+git push                     Upload new commits
+git pull                     Download new commits from GitHub
+git clone <url>              Copy a GitHub repo to your computer
+
+One-time setup
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+
+
+GIT VOCABULARY
+--------------
+Repository (repo)   A project folder that git tracks
+Commit              A saved snapshot of your project, with a note
+Staging             Choosing which changes go in the next commit (git add)
+Branch              A separate line of work. "main" is the default one.
+HEAD                "You are here": the commit you're currently on
+Remote / origin     The online copy of your repo (like on GitHub)
+Push / Pull         Send commits up / bring commits down
+Untracked           A file git can see but isn't tracking yet
+Working tree clean  Nothing has changed since your last commit
+
+
+VS CODE SHORTCUTS (Mac)
+-----------------------
+Cmd+S                Save
+Cmd+Z / Shift+Cmd+Z  Undo / redo
+Cmd+P                Quick open a file by name
+Shift+Cmd+P          Command Palette (search for ANY command)
+Ctrl+`               Show/hide the terminal
+Cmd+B                Show/hide the sidebar
+Shift+Cmd+F          Search across all files
+Cmd+F                Find in current file
+Cmd+/                Comment/uncomment the selected lines
+Option+Up/Down       Move the current line up/down
+Cmd+D                Select the next matching word (multi-select)
+Cmd+\                Split the editor in two
+
+Sidebar icons (top to bottom): Explorer (files), Search, Source Control (git),
+Run/Debug, Extensions.
+
+Source Control icon: shows changed files. Click a file to see the diff.
+Type a message and click Commit to do git add + git commit with buttons.
+
+
+TERMINAL BASICS (zsh on Mac)
+----------------------------
+pwd                  Print the folder you're in
+ls                   List files in this folder
+cd <folder>          Move into a folder
+cd ..                Move up one folder
+open .               Open the current folder in Finder
+open index.html      Open a file in its default app (a web page opens in your browser)
+clear                Clear the screen (or Cmd+K)
+Up arrow             Bring back your previous command
+Tab                  Auto-complete file and folder names
+Ctrl+C               Stop whatever is running
+
+
+CLAUDE CODE TIPS
+----------------
+- Be specific about what you want: "Make the card blue and add a button" works better
+  than "make it nicer".
+- Tell Claude what the file/page is for. Context helps.
+- Review the changes Claude proposes before you approve them.
+- Commit BEFORE asking for a big change. If you don't like the result,
+  git restore . puts everything back.
+- Ask Claude to explain anything you don't understand: "What does this line do?"
+- Ask it to explain errors. Paste the error message in.
+- /help shows the available slash commands.
+- A CLAUDE.md file in your project folder tells Claude about you and your
+  project, so you don't have to repeat yourself.
+- Start a new conversation for a new topic; long chats get unwieldy.
+
+
+WEB BASICS (for your About Me page)
+-----------------------------------
+HTML (index.html)    The content: text, headings, images
+CSS  (style.css)     The look: colors, fonts, layout, animations
+Save, then refresh the browser to see changes.
+Colors: written like #ff6b6b (hex) or rgba(255, 255, 255, 0.5) (last number = see-through)
+
+
+WHEN THINGS GO WRONG
+--------------------
+"fatal: not a git repository"     You're in the wrong folder. Run pwd, then cd to your project.
+"nothing to commit"               You haven't changed anything since the last commit.
+"Please tell me who you are"      Run the two git config --global commands above.
+Stuck in a weird screen           Press q. Still stuck? Press Ctrl+C.
+Made a mess                       git status, then git restore <file>, or ask Claude.
+Not sure what to do               Run git status. It almost always tells you the next step.
