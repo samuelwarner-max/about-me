@@ -20,6 +20,82 @@ To update the live page: edit, save, git add ., git commit -m "...", git push.
 Then wait a minute or two and refresh the live page.
 
 
+WORKFLOWS, IN ORDER
+===================
+Before any workflow: open the project folder in VS Code and open the terminal
+(Ctrl+`). Run pwd to make sure you're in the right folder. If not:
+  cd "/Users/samuelwarner/Documents/About me project"
+(Quotes are needed because of the spaces. Typing cd by itself sends you home.)
+
+WORKFLOW 1: Start a brand-new project (once per project)
+  1. Make a folder and open it in VS Code (File > Open Folder).
+  2. Create your files (index.html, style.css, etc.), by hand or with Claude.
+  3. git init
+  4. Create a .gitignore file containing .DS_Store  (keeps junk out)
+       echo ".DS_Store" > .gitignore
+  5. git add .
+  6. git commit -m "First version"
+  7. On github.com: + > New repository, Public, no README.
+  8. git remote add origin https://github.com/USERNAME/REPO.git
+  9. git push -u origin main
+ 10. GitHub: Settings > Pages > Deploy from a branch > main > / (root) > Save.
+ 11. Wait 1-2 minutes. Live at https://USERNAME.github.io/REPO/
+
+WORKFLOW 2: Everyday small change (the loop)
+  1. Make sure you're on main:        git status
+  2. Edit files and save (Cmd+S).     Refresh the browser to check.
+  3. See what changed:                git status   then   git diff  (q to exit)
+  4. Stage the files:                 git add <file> <file>
+       (or git add .  if you're sure there's nothing unwanted)
+  5. Save the snapshot:               git commit -m "what I changed"
+  6. Publish:                         git push
+  7. Check the live site in 1-2 minutes (hard refresh: Cmd+Shift+R).
+  8. Confirm:                         git status  (clean, up to date)
+
+WORKFLOW 3: Add a bigger feature safely (branch workflow)
+  1. Start clean on main:             git status   (should be clean)
+  2. Create a branch:                 git switch -c feature-name
+  3. Make your changes and save. Check them in the browser.
+  4. Commit (can repeat several times):
+       git add <files>
+       git commit -m "what I changed"
+  5. Happy with it? Go back to main:  git switch main
+  6. Merge the feature in:            git merge feature-name
+  7. Publish:                         git push
+  8. Delete the finished branch:      git branch -d feature-name
+  Not happy? Skip steps 6-7 and just:
+       git switch main
+       git branch -D feature-name     (capital D = delete even if unmerged)
+
+WORKFLOW 4: Undo a mistake
+  Haven't committed yet?
+     git restore <file>          Puts the file back to the last commit
+                                 (your edits are gone for good!)
+  Already committed, not pushed, want to unstage a file?
+     git restore --staged <file>
+  Already committed and pushed?
+     git log --oneline           Find the commit ID
+     git revert <commit-id>      Makes a new commit that undoes it (safe)
+     git push
+
+WORKFLOW 5: Add photos to the page
+  1. Put photos in the images folder.
+  2. Reference them exactly, capitals and all:
+       <img src="images/photo.jpg" alt="Describe the photo">
+     (GitHub Pages is case-sensitive: .JPG and .jpg are different.)
+  3. Keep photos small (under about 1 MB) so the page loads fast.
+  4. Follow Workflow 2 (or 3 for a bigger change).
+     Use git add images index.html style.css  so each file is included.
+
+WORKFLOW 6: Ask Claude to make a change
+  1. Commit your current work first (so there's a safe point to go back to).
+  2. Optional: start a branch (Workflow 3, steps 1-2).
+  3. Describe what you want, with specifics.
+  4. Review the changes. Refresh the browser to see them.
+  5. Like it? Commit and push. Don't like it? git restore . (undoes ALL
+     uncommitted changes) or ask Claude to adjust.
+
+
 GIT: THE COMMANDS YOU'LL USE MOST
 ---------------------------------
 git init                     Turn the current folder into a git repository (once per project)
@@ -36,11 +112,18 @@ git restore <file>           Throw away unsaved-to-git edits in a file (can't be
 git restore --staged <file>  Unstage a file but keep your edits
 git revert <commit-id>       Undo an old commit by making a new one (safe)
 
+Ignoring files
+.gitignore                   A file listing things git should never track (one per line)
+git rm --cached <file>       Stop tracking a file git already has (your copy stays).
+                             Commit afterward. Use with .gitignore.
+
 Branches (try risky ideas safely)
 git branch                   List branches
 git switch -c <name>         Create a new branch and move to it
 git switch main              Go back to the main branch
 git merge <name>             Bring a branch's changes into the one you're on
+git branch -d <name>         Delete a branch that's already merged (safe)
+git branch -D <name>         Force-delete a branch, even unmerged (careful)
 
 GitHub (backing up and sharing online)
 git remote add origin <url>  Connect this project to a GitHub repo (once)
